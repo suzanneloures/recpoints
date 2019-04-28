@@ -3,6 +3,7 @@ import polyline
 import poi
 from datetime import datetime
 from model.route import Route
+from recommender import *
 
 
 
@@ -31,6 +32,8 @@ def poisPorRota(rota,pois,distance):
                 pois_retorno.append(poi_to_add)
     return Route(rota,pois_retorno)
 
+
+
 #['overview_polyline']['points']
 if __name__ == '__main__':
     start_location = 'Aeroporto de Salvador'
@@ -41,6 +44,12 @@ if __name__ == '__main__':
     pois = poi.loadJson()
 
     pois_route = poisPorRota(route,pois,1000)
+
+    scores = []
+    train()
+    
+    for p in pois_route.pois:
+        scores.append(predict(999, p['item_id']))
 
     final_route = get_directions(start_location,end_location,waypoints=pois_route.get_pois_coordinates())
     print("FIM")

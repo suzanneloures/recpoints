@@ -16,7 +16,6 @@ def poisInDistance(startPoint,pois,distance):
 
 
 if __name__=='__main__':
-    print('a')
     pois = loadJson()
     start = (-13.0018049, -38.4819481)
     poisInDistance(start, pois, 1000)
