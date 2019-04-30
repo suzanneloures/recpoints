@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import googlemaps
 import polyline
 import poi
@@ -32,25 +34,37 @@ def poisPorRota(rota,pois,distance):
                 pois_retorno.append(poi_to_add)
     return Route(rota,pois_retorno)
 
+pois = poi.loadJson()
 
 
-#['overview_polyline']['points']
-if __name__ == '__main__':
-    start_location = 'Aeroporto de Salvador'
-    end_location = 'Farol da Barra'
-    routes = get_directions(start_location,end_location)
-    route = routes[0]
-    
-    pois = poi.loadJson()
+start_location = 'Basílica do Senhor do Bonfim'
+end_location = 'Aeroporto Internacional de Salvador - Dep. Luís Eduardo Magalhães'
 
-    pois_route = poisPorRota(route,pois,1000)
-
+def score_by_route(route): # usada para obter informacoes das rotas
+    pois_route = poisPorRota(route,pois,300) #identifica pontos proximos as rotas
+    pois_route.final_google_route = get_directions(start_location, end_location,waypoints=pois_route.get_pois_coordinates())[0] #wayponts = por onde a rota passa (pois)
     scores = []
-    train()
-    
     for p in pois_route.pois:
-        scores.append(predict(999, p['item_id']))
+        scores.append((0,predict(999, p['item_id'])))
+    pois_route.scores = scores
+    pois_route.get_final_score()
+    return pois_route
 
-    final_route = get_directions(start_location,end_location,waypoints=pois_route.get_pois_coordinates())
+
+if __name__ == '__main__':
+    routes = get_directions(start_location,end_location) #rotas iniciais
+    train()
+
+    pois_routes = [] #array com as rotas
+
+    for route in routes: #para cada rota
+        pois_routes.append(score_by_route(route)) #para cada rota a funcao eh chamada
+
+    pois_routes.sort(key=lambda x: x.final_score, reverse=True)
+
+    for p in pois_routes:
+        print('-----------')
+        p.print_final_info()
+        print('-----------')
     print("FIM")
     #print(pois_retorno)
