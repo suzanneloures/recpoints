@@ -10,7 +10,7 @@ from recommender import *
 
 
 gmaps = googlemaps.Client(key='AIzaSyCPlQM2ArMI9NDj2LJYUM7UvOZjiAR_i14')
-
+pois = poi.loadJson()
 # Geocoding an address
 #geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
 
@@ -34,14 +34,14 @@ def poisPorRota(rota,pois,distance):
                 pois_retorno.append(poi_to_add)
     return Route(rota,pois_retorno)
 
-pois = poi.loadJson()
 
 
-start_location = 'Basílica do Senhor do Bonfim'
+start_location = 'UFBA Ondina'
 end_location = 'Aeroporto Internacional de Salvador - Dep. Luís Eduardo Magalhães'
 
 def score_by_route(route): # usada para obter informacoes das rotas
-    pois_route = poisPorRota(route,pois,300) #identifica pontos proximos as rotas
+    pois_route = poisPorRota(route,pois,300) #chama funcao e passa os parametros pra retornar os pois
+    #pois_route é uma variavel do tipo Route (route.py)
     pois_route.final_google_route = get_directions(start_location, end_location,waypoints=pois_route.get_pois_coordinates())[0] #wayponts = por onde a rota passa (pois)
     scores = []
     for p in pois_route.pois:
@@ -60,7 +60,7 @@ if __name__ == '__main__':
     for route in routes: #para cada rota
         pois_routes.append(score_by_route(route)) #para cada rota a funcao eh chamada
 
-    pois_routes.sort(key=lambda x: x.final_score, reverse=True)
+    pois_routes.sort(key=lambda x: x.final_score, reverse=True) #??#
 
     for p in pois_routes:
         print('-----------')

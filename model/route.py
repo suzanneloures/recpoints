@@ -17,7 +17,7 @@ class Route:
             pois_return.append((poi['latitude'],poi['longitude']))
         return pois_return
 
-    #funcao= ([quant pois] * [soma_scores] * 1000) / distancia final
+    #funcao = ([quant pois] * [soma_scores] * 1000) / distancia final
     def get_final_score(self): #aplica a funcao e salva na variavel final_score
         self.final_distance = 0.0
         for l in self.final_google_route['legs']: #soma as distancas das "pernas" das rotas
@@ -30,6 +30,8 @@ class Route:
         print("Rota por " + self.final_google_route['summary'])
         print("Distancia (metros): " + str(self.final_distance))
         print("Score final : " + str(self.final_score))
+        for p in self.pois:
+            print(p['name'])
         if(legs):
             for l in self.final_google_route[u'legs']:
                 for s in l[u'steps']:

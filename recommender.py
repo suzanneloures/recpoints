@@ -24,8 +24,10 @@ def predict(uid, iid):
     global svd
     pred = svd.predict(uid, iid)
     score = pred.est
+#    print(score)
     return score
 
 if __name__ == '__main__':
     train()
-    predict(999,'59392558')
+    predict(108387183318287251656,'76613809')
+    
