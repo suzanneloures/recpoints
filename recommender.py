@@ -1,5 +1,5 @@
 import pandas as pd
-from surprise import Reader, Dataset, SVD, evaluate
+from surprise import Reader, Dataset, SVD
 import json
 
 
@@ -24,7 +24,7 @@ def predict(uid, iid):
     global svd
     pred = svd.predict(uid, iid)
     score = pred.est
-#    print(score)
+    print(score)
     return score
 
 if __name__ == '__main__':

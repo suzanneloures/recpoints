@@ -36,8 +36,8 @@ def poisPorRota(rota,pois,distance):
 
 
 
-start_location = 'UFBA Ondina'
-end_location = 'Aeroporto Internacional de Salvador - Dep. Luís Eduardo Magalhães'
+start_location = 'Pelourinho'
+end_location = 'Praia Tubarão'
 
 def score_by_route(route): # usada para obter informacoes das rotas
     pois_route = poisPorRota(route,pois,300) #chama funcao e passa os parametros pra retornar os pois
