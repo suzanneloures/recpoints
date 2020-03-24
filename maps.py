@@ -6,10 +6,10 @@ import poi
 from datetime import datetime
 from model.route import Route
 from recommender import *
+from keymaps import *
 
 
-
-gmaps = googlemaps.Client(key='AIzaSyCPlQM2ArMI9NDj2LJYUM7UvOZjiAR_i14')
+gmaps = googlemaps.Client(key=KEY_MAPS)
 pois = poi.loadJson()
 # Geocoding an address
 #geocode_result = gmaps.geocode('1600 Amphitheatre Parkway, Mountain View, CA')
